@@ -1,0 +1,577 @@
+openapi: 3.0.0
+info:
+  title: Sistema de Control de Produccion
+  description: API para gestionar clientes y proveedores en Control de Produccion.
+  version: 1.0.0
+servers:
+  - url: https://sistema-controlproduccion.onrender.com
+    description: Servidor nube
+paths:
+  /clientes:
+    get:
+      summary: Obtener todos los clientes
+      responses:
+        '200':
+          description: Lista de clientes obtenida con éxito
+    post:
+      summary: Crear un nuevo cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '201':
+          description: Cliente creado con éxito
+        '400':
+          description: Error en los datos enviados
+  /clientes/id/{id}:
+    get:
+      summary: Obtener un cliente por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente encontrado por ID
+        '404':
+          description: Cliente no encontrado por ID
+    put:
+      summary: Actualizar un cliente por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '200':
+          description: Cliente actualizado correctamente
+        '404':
+          description: Cliente no encontrado
+    delete:
+      summary: Eliminar un cliente por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente eliminado correctamente
+        '404':
+          description: Cliente no encontrado
+  /clientes/ruc/{ruc}:
+    get:
+      summary: Obtener un cliente por RUC
+      parameters:
+        - name: ruc
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente encontrado por RUC 
+        '404':
+          description: Cliente no encontrado por RUC
+  /proveedores:
+    get:
+      summary: Obtener todos los proveedores
+      responses:
+        '200':
+          description: Lista de proveedores obtenida con éxito
+    post:
+      summary: Crear un nuevo proveedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proveedor'
+      responses:
+        '201':
+          description: Proveedor creado con éxito
+        '400':
+          description: Error en los datos enviados
+  /proveedores/id/{id}:
+    get:
+      summary: Obtener un proveedor por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Proveedor encontrado por ID
+        '404':
+          description: Proveedor no encontrado por ID
+    put:
+      summary: Actualizar un proveedor por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proveedor'
+      responses:
+        '200':
+          description: Proveedor actualizado correctamente
+    delete:
+      summary: Eliminar un proveedor por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Proveedor eliminado correctamente
+        '404':
+          description: Proveedor no encontrado
+  /proveedores/ruc/{ruc}:
+    get:
+      summary: Obtener un proveedor por RUC
+      parameters:
+        - name: ruc
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Proveedor encontrado por RUC
+        '404':
+          description: Proveedor no encontrado por RUC
+  /ciudades:
+    get:
+      summary: Obtener todas las ciudades
+      responses:
+        '200':
+          description: Lista de ciudades obtenida con éxito
+    post:
+      summary: Crear una nueva ciudad
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ciudad'
+      responses:
+        '201':
+          description: Ciudad creada con éxito
+        '400':
+          description: Error en los datos enviados
+  /ciudades/id/{id}:
+    get:
+      summary: Obtener una ciudad por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ciudad encontrada por ID
+        '404':
+          description: Ciudad no encontrada
+    put:
+      summary: Actualizar una ciudad por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ciudad'
+      responses:
+        '200':
+          description: Ciudad actualizada correctamente
+        '404':
+          description: Ciudad no encontrada
+    delete:
+      summary: Eliminar una ciudad por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ciudad eliminada correctamente
+        '404':
+          description: Ciudad no encontrada
+  /materiales_precios:
+    get:
+      summary: Obtener todos los registros de materiales y precios
+      responses:
+        '200':
+          description: Lista de materiales y precios obtenida con éxito
+    post:
+      summary: Crear un nuevo registro de materiales y precios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaterialPrecio'
+      responses:
+        '201':
+          description: Registro creado con éxito
+        '400':
+          description: Error en los datos enviados
+  /materiales_precios/id/{id}:
+    get:
+      summary: Obtener un registro de materiales y precios por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Registro encontrado por ID
+        '404':
+          description: Registro no encontrado
+  /materiales:
+    get:
+      summary: Obtener todos los materiales
+      responses:
+        '200':
+          description: Lista de materiales obtenida con éxito
+    post:
+      summary: Crear un nuevo material
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Material'
+      responses:
+        '201':
+          description: Material creado con éxito
+        '400':
+          description: Error en los datos enviados
+  /materiales/id/{id}:
+    get:
+      summary: Obtener un material por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Material encontrado por ID
+        '404':
+          description: Material no encontrado
+  /productos_materiales:
+    get:
+      summary: Obtener todos los registros de productos materiales
+      responses:
+        '200':
+          description: Lista de registros obtenida con éxito
+    post:
+      summary: Crear un nuevo registro en productos materiales
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductoMaterial'
+      responses:
+        '201':
+          description: Registro creado con éxito
+        '400':
+          description: Error en los datos enviados
+  /productos_materiales/id/{id}:
+    get:
+      summary: Obtener un registro de productos materiales por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Registro encontrado por ID
+        '404':
+          description: Registro no encontrado
+  /productos:
+    get:
+      summary: Obtener todos los productos
+      responses:
+        '200':
+          description: Lista de productos obtenida con éxito
+    post:
+      summary: Crear un nuevo producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Producto'
+      responses:
+        '201':
+          description: Producto creado con éxito
+        '400':
+          description: Error en los datos enviados
+  /productos/id/{id}:
+    get:
+      summary: Obtener un producto por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Producto encontrado por ID
+        '404':
+          description: Producto no encontrado
+  /productos_adjuntos:
+    get:
+      summary: Obtener todos los productos adjuntos
+      responses:
+        '200':
+          description: Lista de productos adjuntos obtenida con éxito
+    post:
+      summary: Crear un nuevo producto adjunto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductoAdjunto'
+      responses:
+        '201':
+          description: Producto adjunto creado con éxito
+        '400':
+          description: Error en los datos enviados
+  /productos_adjuntos/id/{id}:
+    delete:
+      summary: Eliminar un producto adjunto por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Producto adjunto eliminado con éxito
+        '404':
+          description: Producto adjunto no encontrado
+  /productos_categoria:
+    get:
+      summary: Obtener todas las categorías de productos
+      responses:
+        '200':
+          description: Lista de categorías obtenida con éxito
+    post:
+      summary: Crear una nueva categoría de producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaProducto'
+      responses:
+        '201':
+          description: Categoría creada con éxito
+        '400':
+          description: Error en los datos enviados
+  /productos_categoria/id/{id}:
+    delete:
+      summary: Eliminar una categoría de producto por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Categoría eliminada con éxito
+        '404':
+          description: Categoría no encontrada
+
+components:
+  schemas:
+    Cliente:
+      type: object
+      properties:
+        razonsocial:
+          type: string
+        tipo_cliente:
+          type: string
+        ruc:
+          type: string
+        digveri:
+          type: integer
+        telefono:
+          type: string
+        celular:
+          type: string
+        direccion:
+          type: string
+        ciudadid:
+          type: integer
+        email:
+          type: string
+        limitecuenta:
+          type: integer
+        contacto:
+          type: string
+        estado:
+          type: string
+    Proveedor:
+      type: object
+      properties:
+        ruc:
+          type: string
+        digveri:
+          type: integer
+        nombre:
+          type: string
+        contacto:
+          type: string
+        telefono:
+          type: string
+        email:
+          type: string
+        direccion:
+          type: string
+        ciudad:
+          type: string
+        departamento:
+          type: string
+        distrito:
+          type: string
+        pais:
+          type: string
+        codigo_postal:
+          type: string
+        sitio_web:
+          type: string
+        tipo:
+          type: string
+        moneda:
+          type: string
+        estado:
+          type: string
+    Ciudad:
+      type: object
+      properties:
+        descripcion:
+          type: string
+    MaterialPrecio:
+      type: object
+      properties:
+        material_id:
+          type: integer
+        proveedor_id:
+          type: integer
+        tipo_precio:
+          type: string
+        precio:
+          type: number
+          format: float
+    Material:
+      type: object
+      properties:
+        nombre_material:
+          type: string
+        tipo_material:
+          type: string
+        cantidad:
+          type: integer
+        unidad:
+          type: string
+        dimension:
+          type: string
+        dimensionlargo:
+          type: number
+          format: float
+        dimensionancho:
+          type: number
+          format: float
+        calidad:
+          type: string
+        espesor:
+          type: number
+          format: float
+        precio_id:
+          type: integer
+    ProductoMaterial:
+      type: object
+      properties:
+        producto_id:
+          type: integer
+        materiales_id:
+          type: integer
+        cantidad_requerida:
+          type: number
+          format: float
+        unidad:
+          type: string
+    Producto:
+      type: object
+      properties:
+        nombre:
+          type: string
+        tipo:
+          type: string
+        descripcion:
+          type: string
+        id_categoria:
+          type: integer
+        imagen:
+          type: string
+    ProductoAdjunto:
+      type: object
+      properties:
+        producto_id:
+          type: integer
+        path:
+          type: string
+        tipo:
+          type: string
+    CategoriaProducto:
+      type: object
+      properties:
+        descripcion:
+          type: string
+        obscategoria:
+          type: string
