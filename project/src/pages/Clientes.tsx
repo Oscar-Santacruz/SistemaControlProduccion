@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { toast } from 'react-hot-toast';
 import { Plus, Edit, Trash2, Search } from 'lucide-react';
@@ -9,6 +9,7 @@ export default function Clientes() {
   const [selectedCliente, setSelectedCliente] = useState<Cliente | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCiudadId, setSelectedCiudadId] = useState<number | undefined>(undefined);
 
   const { data: clientes, isLoading: isLoadingClientes } = useQuery('clientes', () =>
     clientesApi.getAll().then((res) => res.data)
@@ -53,6 +54,20 @@ export default function Clientes() {
       onError: () => toast.error('Error al eliminar el cliente'),
     }
   );
+
+  // Cuando se selecciona un cliente, buscar el ID de la ciudad correspondiente
+  useEffect(() => {
+    if (selectedCliente && ciudades) {
+      const ciudadEncontrada = ciudades.find(
+        (ciudad) => ciudad.descripcion === selectedCliente.ciudad
+      );
+      if (ciudadEncontrada) {
+        setSelectedCiudadId(ciudadEncontrada.id);
+      }
+    } else {
+      setSelectedCiudadId(undefined);
+    }
+  }, [selectedCliente, ciudades]);
 
   // Filtrar clientes por cualquier columna
   const filteredClientes = clientes?.filter((cliente) => {
@@ -215,13 +230,15 @@ export default function Clientes() {
                   <label className="block text-sm font-medium text-gray-700">
                     Tipo Cliente
                   </label>
-                  <input
-                    type="text"
+                  <select
                     name="tipo_cliente"
-                    defaultValue={selectedCliente?.tipo_cliente}
+                    defaultValue={selectedCliente?.tipo_cliente || "jurídica"}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     required
-                  />
+                  >
+                    <option value="jurídica">juridica</option>
+                    <option value="física">fisica</option>
+                  </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
@@ -289,7 +306,7 @@ export default function Clientes() {
                   </label>
                   <select
                     name="ciudadid"
-                    defaultValue={selectedCliente?.ciudadid || ""}
+                    defaultValue={selectedCiudadId}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     required
                   >

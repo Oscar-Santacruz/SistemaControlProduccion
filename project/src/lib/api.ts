@@ -17,6 +17,7 @@ export interface Cliente {
   celular: string;
   direccion: string;
   ciudadid: number;
+  ciudad?: string;
   email: string;
   limitecuenta: number;
   contacto: string;
